@@ -13,6 +13,24 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+  def chats
+    user = User.find(params[:id])
+    # byebug
+    render json: user.chats
+  end
+
+  def friends
+    user = User.find(params[:id])
+    # byebug
+    render json: user.friends
+  end
+
+  def requests 
+    user = User.find(params[:id])
+    # byebug
+    render json: user.requests
+  end
+
   # POST /users
   def create
     @user = User.new(user_params)
@@ -46,6 +64,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password_digest, :image)
+      params.permit(:username, :password, :image)
     end
 end
