@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :comments
+  resources :posts
   resources :requests
   # get 'sessions/create'
   # get 'sessions/destroy'
@@ -14,6 +16,12 @@ Rails.application.routes.draw do
   get '/users_chats/:id', to: 'users#chats'
   get '/users_friends/:id', to: 'users#friends'
   get '/users_requests/:id', to: 'users#requests'
+
+  get '/user_feed/:id', to: 'posts#user_feed'
+
+  get '/user_posts/:id', to: 'posts#posts'
+
+  get '/user_friends_list/:id', to: 'users#getFriends'
 
   
 

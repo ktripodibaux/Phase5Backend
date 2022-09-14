@@ -25,6 +25,8 @@ class UsersController < ApplicationController
     render json: user.friends
   end
 
+
+
   def requests 
     user = User.find(params[:id])
     # byebug
@@ -42,9 +44,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def getFriends 
+    user = User.find(params[:id])
+    render json: user.list_friends
+  end
+
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
+    # byebug
+    if @user.update(edit_params)
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -65,5 +73,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.permit(:username, :password, :image)
+    end
+
+    def edit_params 
+      params.permit(:image)
     end
 end

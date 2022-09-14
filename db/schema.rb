@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_184824) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_10_161345) do
   create_table "chats", force: :cascade do |t|
     t.integer "user1_id"
     t.integer "user2_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.integer "User_id", null: false
+    t.integer "Post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["Post_id"], name: "index_comments_on_Post_id"
+    t.index ["User_id"], name: "index_comments_on_User_id"
   end
 
   create_table "friendships", force: :cascade do |t|
@@ -35,6 +45,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_184824) do
     t.index ["User_id"], name: "index_messages_on_User_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.integer "User_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["User_id"], name: "index_posts_on_User_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.integer "sender_id"
     t.integer "receiver_id"
@@ -50,6 +69,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_184824) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "Posts"
+  add_foreign_key "comments", "Users"
   add_foreign_key "messages", "Chats"
   add_foreign_key "messages", "Users"
+  add_foreign_key "posts", "Users"
 end
